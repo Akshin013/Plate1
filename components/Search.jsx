@@ -16,7 +16,7 @@ export default function Search({ profiles }) {
     <div className="search">
       <input
         value={q}
-        onChange={(e) => setQ(e.target.value)}
+        onChange={(e) => setQ(e.target.value.toUpperCase())}
         placeholder="Введи номер: А123ВС77"
         maxLength={12}
         autoComplete="off"
