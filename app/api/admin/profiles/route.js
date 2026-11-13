@@ -31,7 +31,6 @@ function validateProfile(body) {
     ])
   );
 
-  profile.username = profile.username.toLowerCase();
 
   for (const [field, maxLength] of Object.entries(MAX_LENGTHS)) {
     if (profile[field].length > maxLength) {
@@ -39,7 +38,7 @@ function validateProfile(body) {
     }
   }
 
-  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(profile.username)) {
+  if (!/^[\p{L}\p{N}]+(?:[ ._-][\p{L}\p{N}]+)*$/u.test(profile.username)) {
     throw new Error('Некорректный ник профиля.');
   }
 
@@ -173,7 +172,7 @@ export async function POST(request) {
 
     // Редактирование
     if (body.action === 'update') {
-      const username = clean(body.username).toLowerCase();
+      const username = clean(body.username).normalize('NFC');
 
       if (!username) {
         return NextResponse.json(
@@ -197,7 +196,7 @@ export async function POST(request) {
 
     // Скрыть / показать
     if (body.action === 'toggle') {
-      const username = clean(body.username).toLowerCase();
+      const username = clean(body.username).normalize('NFC');
 
       if (!username || typeof body.active !== 'boolean') {
         return NextResponse.json(
@@ -216,7 +215,7 @@ export async function POST(request) {
 
     // Удаление
     if (body.action === 'delete') {
-      const username = clean(body.username).toLowerCase();
+      const username = clean(body.username).normalize('NFC');
 
       if (!username) {
         return NextResponse.json(

@@ -151,8 +151,8 @@ export default function AdminPanel({ authenticated, missingConfiguration, passwo
                 Ник профиля *
                 <input name="username" value={username} onChange={(event) => {
                   setUsernameEdited(true);
-                  setUsername(event.target.value.toLowerCase());
-                }} placeholder="например, alex-370z" pattern="[a-z0-9]+(?:-[a-z0-9]+)*" maxLength={40} required />
+                  setUsername(event.target.value);
+                }} placeholder="например, alex-370z" pattern="[\p{L}\p{N}]+(?:[ ._-][\p{L}\p{N}]+)*" maxLength={40} required />
               </label>
               <label>
                 Имя владельца *
@@ -168,7 +168,14 @@ export default function AdminPanel({ authenticated, missingConfiguration, passwo
               </label>
               <label>
                 Госномер *
-                <input name="plate" maxLength={30} required />
+                <input
+  name="plate"
+  maxLength={30}
+  onChange={(event) => {
+    event.target.value = event.target.value.toUpperCase();
+  }}
+  required
+/>
               </label>
               <label>
                 Instagram
