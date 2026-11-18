@@ -4,7 +4,7 @@ import AutoRefresh from '../components/AutoRefresh';
 import { Analytics } from '@vercel/analytics/next';
 
 export const metadata = {
-  metadataBase: new URL('https://plate1.vercel.app'),
+  metadataBase: new URL('https://plateru.vercel.app'),
 
   title: {
     default: 'Plate — цифровой профиль автомобиля',
@@ -37,7 +37,7 @@ export const metadata = {
   openGraph: {
     type: 'website',
     locale: 'ru_RU',
-    url: 'https://plate1.vercel.app',
+    url: 'https://plateru.vercel.app',
     siteName: 'Plate',
     title: 'Plate — цифровой профиль автомобиля',
     description:

@@ -15,7 +15,7 @@ export async function generateMetadata({ params }) {
   const description = `Автомобиль ${p.car.brand} ${p.car.model}, госномер ${p.plate}. Личный профиль автомобиля на Plate.`;
 
   const image = p.avatar || '/og-image.jpg';
-  const url = `https://plate1.vercel.app/${p.username}`;
+  const url = `https://plateru.vercel.app/${p.username}`;
 
   return {
     title,

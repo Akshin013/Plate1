@@ -6,7 +6,7 @@ export default function robots() {
       allow: '/',
       disallow: ['/admin', '/api/'],
     },
-    sitemap: 'https://plate1.vercel.app/sitemap.xml',
-    host: 'https://plate1.vercel.app',
+    sitemap: 'https://plateru.vercel.app/sitemap.xml',
+    host: 'https://plateru.vercel.app',
   };
 }
