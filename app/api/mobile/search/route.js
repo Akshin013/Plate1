@@ -1,4 +1,3 @@
-
 import { NextResponse } from 'next/server';
 import { getProfiles } from '../../../../lib/profiles';
 
@@ -15,29 +14,19 @@ export async function GET(request) {
     const { searchParams } = new URL(request.url);
     const plate = normalizePlate(searchParams.get('plate'));
 
-    if (!plate) {
-      return NextResponse.json(
-        { error: 'Введите корректный номер автомобиля' },
-        { status: 400 }
-      );
+    if (plate.length < 2) {
+      return NextResponse.json({ profiles: [] });
     }
 
-    const profiles = await getProfiles();
+    const allProfiles = await getProfiles();
 
-    const profile = profiles.find(
-        (item) => normalizePlate(item.plate).startsWith(plate)
+    const profiles = allProfiles.filter((item) =>
+      normalizePlate(item.plate).includes(plate)
     );
-
-    if (!profile) {
-      return NextResponse.json(
-        { error: 'Автомобиль не найден' },
-        { status: 404 }
-      );
-    }
 
     return NextResponse.json({
       success: true,
-      profile,
+      profiles: profiles.slice(0, 20),
     });
   } catch (error) {
     console.error('Mobile search error:', error);
