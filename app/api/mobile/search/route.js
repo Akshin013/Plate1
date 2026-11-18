@@ -15,7 +15,7 @@ export async function GET(request) {
     const { searchParams } = new URL(request.url);
     const plate = normalizePlate(searchParams.get('plate'));
 
-    if (!plate || plate.length < 5) {
+    if (!plate) {
       return NextResponse.json(
         { error: 'Введите корректный номер автомобиля' },
         { status: 400 }
@@ -25,7 +25,7 @@ export async function GET(request) {
     const profiles = await getProfiles();
 
     const profile = profiles.find(
-      (item) => normalizePlate(item.plate) === plate
+        (item) => normalizePlate(item.plate).startsWith(plate)
     );
 
     if (!profile) {
