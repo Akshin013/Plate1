@@ -9,12 +9,39 @@ export async function generateMetadata({ params }) {
   const { username } = await params;
   const p = await getProfile(username);
 
-  return p
-    ? {
-        title: `${p.name} · ${p.car.brand} ${p.car.model} | Plate`,
-        description: `Автомобиль ${p.car.brand} ${p.car.model}, госномер ${p.plate}. Личный профиль автомобиля на Plate.`,
-      }
-    : {};
+  if (!p) return {};
+
+  const title = `${p.name} · ${p.car.brand} ${p.car.model} | Plate`;
+  const description = `Автомобиль ${p.car.brand} ${p.car.model}, госномер ${p.plate}. Личный профиль автомобиля на Plate.`;
+
+  const image = p.avatar || '/og-image.jpg';
+  const url = `https://plate1.vercel.app/${p.username}`;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: 'Plate',
+      type: 'profile',
+      images: [
+        {
+          url: image,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [image],
+    },
+  };
 }
 
 export default async function Page({ params }) {
